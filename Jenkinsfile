@@ -3,9 +3,11 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
+                git(
                 url: 'https://github.com/yashwanthkothi/weather-app.git',
                     credentialsId: 'weather',  // Use your Jenkins credential ID
                     branch: 'main'
+                )
             }
         }
         stage('Install & Test') {
