@@ -12,8 +12,12 @@ pipeline {
         }
         stage('Install & Test') {
             steps {
-                sh 'pip install -r requirements.txt'
-                sh 'pytest test_app.py -v'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    pytest test_app.py -v
+                '''
             }
         }
         stage('Build Docker Image') {
