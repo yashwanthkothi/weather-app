@@ -31,7 +31,6 @@ pipeline {
             steps {
                 script {
                     echo 'Skipping deployment'
-                    }
                 }
             }
         }
