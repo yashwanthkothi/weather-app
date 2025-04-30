@@ -30,8 +30,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-creds') {
-                        docker.image("weather-app:${env.BUILD_NUMBER}").push()
+                    echo 'Skipping deployment'
                     }
                 }
             }
