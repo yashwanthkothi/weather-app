@@ -1,13 +1,15 @@
-from flask import Flask, render_template,jsonify
+from flask import Flask, jsonify
 import requests
 import os
 
 app = Flask(__name__)
-api_key = os.getenv('OWM_API_KEY')
+api_key = os.getenv('OWM_API_KEY')  # Use the environment variable
 
 @app.route('/')
 def weather():
-    api_key = "YOUR_OPENWEATHER_API_KEY"  # Replace with a real API key
+    if not api_key:
+        return jsonify({"error": "API key is missing"}), 400
+
     city = "London"
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     
@@ -26,3 +28,4 @@ def weather():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
