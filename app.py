@@ -7,25 +7,26 @@ api_key = os.getenv('OWM_API_KEY')  # Use the environment variable
 
 @app.route('/')
 def weather():
-    api_key = os.getenv('OWM_API_KEY')  # Fetch API key from environment variable
-    if not api_key:
-        return jsonify({"error": "API key is missing"}), 400  # Return a 400 error if API key is missing
-
+    api_key = os.getenv('OWM_API_KEY')  # Ensure your API key is set
     city = "London"
+    if not api_key:
+        return render_template('index.html', city=city, error="API key is missing")
+
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
-    
+
     try:
         response = requests.get(url)
-        response.raise_for_status()  # Raises HTTPError for bad responses
+        response.raise_for_status()
         data = response.json()
-        
+
         if 'main' not in data or 'temp' not in data['main']:
-            return jsonify({"error": "Weather data unavailable"}), 502  # Return 502 if weather data is unavailable
-            
-        return jsonify({"city": city, "temperature": data['main']['temp']}), 200
-        
+            return render_template('index.html', city=city, error="Weather data unavailable")
+
+        temperature = data['main']['temp']
+        return render_template('index.html', city=city, temperature=temperature)
+
     except requests.exceptions.RequestException as e:
-        return jsonify({"error": str(e)}), 500  
+        return render_template('index.html', city=city, error=str(e))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
