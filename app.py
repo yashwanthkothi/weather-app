@@ -22,11 +22,10 @@ def weather():
         if 'main' not in data or 'temp' not in data['main']:
             return jsonify({"error": "Weather data unavailable"}), 502  # Return 502 if weather data is unavailable
             
-        return f"Weather in {city}: {data['main']['temp']}°C"
+        return jsonify({"city": city, "temperature": data['main']['temp']}), 200
         
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500  
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-
