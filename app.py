@@ -3,7 +3,7 @@ import requests
 import os
 
 app = Flask(__name__)
-api_key = os.getenv('OWM_API_KEY', 'YOUR_OPENWEATHER_API_KEY')
+api_key = os.getenv('OWM_API_KEY')
 
 @app.route('/')
 def weather():
