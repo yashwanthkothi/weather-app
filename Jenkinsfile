@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        OWM_API_KEY = ()
+        OWM_API_KEY = credentials('owm-api-key-prod') 
     }
     stages {
         stage('Clone') {
