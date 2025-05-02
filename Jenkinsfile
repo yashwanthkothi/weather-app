@@ -1,15 +1,26 @@
 pipeline {
     agent any
+    environment {
+        OWM_API_KEY = credentials('owm-api-key-prod') 
+    }
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/your-username/weather-app.git'
+                git(
+                url: 'https://github.com/yashwanthkothi/weather-app.git',
+                    credentialsId: 'weather',  // Use your Jenkins credential ID
+                    branch: 'main'
+                )
             }
         }
         stage('Install & Test') {
             steps {
-                sh 'pip install -r requirements.txt'
-                sh 'pytest test_app.py -v'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    pytest test_app.py -v
+                '''
             }
         }
         stage('Build Docker Image') {
@@ -22,9 +33,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-creds') {
-                        docker.image("weather-app:${env.BUILD_NUMBER}").push()
-                    }
+                    echo 'Skipping deployment'
                 }
             }
         }
