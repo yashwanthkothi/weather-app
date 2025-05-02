@@ -31,7 +31,7 @@ def test_weather_endpoint(client, monkeypatch):
     
     response = client.get('/')
     assert response.status_code == 200
-    assert b"Weather in London: 15.5" in response.data
+    assert response.json == {"city": "London", "temperature": 15.5} 
 
 def test_weather_endpoint_failure(client, monkeypatch):
     def mock_get(*args, **kwargs):
