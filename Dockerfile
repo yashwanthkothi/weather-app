@@ -18,4 +18,3 @@ ENV FLASK_APP=app.py
 
 # Run the application
 CMD ["python", "app.py"]
-]
