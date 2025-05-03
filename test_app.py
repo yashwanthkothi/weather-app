@@ -29,7 +29,7 @@ def test_weather_endpoint(client, monkeypatch):
     
     monkeypatch.setattr("requests.get", mock_get)
     
-    response = client.get('/')
+    response = client.get('/', headers={"Accept": "application/json"})
     assert response.status_code == 200
     assert response.json == {"city": "London", "temperature": 15.5} 
 
