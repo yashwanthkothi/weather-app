@@ -29,7 +29,7 @@ def weather():
 
     except requests.exceptions.RequestException as e:
          error = str(e)
-        return jsonify({"error": error}), 500 if request.headers.get('Accept') == 'application/json' else render_template('index.html', city=city, error=error)
+         return jsonify({"error": error}), 500 if request.headers.get('Accept') == 'application/json' else render_template('index.html', city=city, error=error)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
