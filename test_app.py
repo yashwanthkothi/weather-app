@@ -39,7 +39,7 @@ def test_weather_endpoint_failure(client, monkeypatch):
     
     monkeypatch.setattr("requests.get", mock_get)
     
-    response = client.get('/')
+    response = client.get('/', headers={"Accept": "application/json"})
     assert response.status_code == 500
     data = json.loads(response.data)
     assert "error" in data
