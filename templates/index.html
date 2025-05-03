@@ -10,20 +10,14 @@
 </head>
 <body>
   <div class="card" id="weatherCard">
-    <h2>City: <span id="cityName"></span></h2>
-    <p>Temperature: <span id="tempValue"></span>°C</p>
+    <h2>City: {{ city }}</h2>
+    {% if temperature %}
+      <p>Temperature: {{ temperature }}°C</p>
+    {% elif error %}
+      <p style="color: red;">Error: {{ error }}</p>
+    {% else %}
+      <p>No weather data available.</p>
+    {% endif %}
   </div>
-
-  <script>
-    // Simulated API response
-    const data = {
-      city: "London",
-      temperature: 10.22
-    };
-
-    // Populate the UI
-    document.getElementById('cityName').textContent = data.city;
-    document.getElementById('tempValue').textContent = data.temperature;
-  </script>
 </body>
 </html>
